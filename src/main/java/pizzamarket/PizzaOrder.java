@@ -1,10 +1,8 @@
 package pizzamarket;
 
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
-@Data
+
 public class PizzaOrder {
     private String deliveryName;
     private String deliveryStreet;
