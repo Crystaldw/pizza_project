@@ -11,6 +11,6 @@ public class Ingredient {
     private final Type type;
 
     public enum Type {
-        BASIS, CHEESE, SAUCE, BACON, MUSHROOMS
+        BASE, CHEESE, SAUCE, BACON, WRAP
     }
 }
