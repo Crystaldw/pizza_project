@@ -1,7 +1,9 @@
 package pizzamarket.web;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,11 @@ public class OrderController {
     }
 
     @PostMapping
-    public String processOrder(PizzaOrder order,
+    public String processOrder(@Valid PizzaOrder order, Errors errors,
                                SessionStatus sessionStatus) {
+        if (errors.hasErrors()){
+            return "design";
+        }
         log.info("Order Submitted: {}", order);
         sessionStatus.setComplete();
 

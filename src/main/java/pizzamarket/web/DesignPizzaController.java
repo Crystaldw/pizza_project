@@ -1,5 +1,7 @@
 package pizzamarket.web;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import pizzamarket.Ingredient;
 import pizzamarket.Ingredient.Type;
@@ -56,7 +58,10 @@ public class DesignPizzaController<pizzaOrder> {
     }
 
     @PostMapping
-    public String processPizza(Pizza pizza, @ModelAttribute PizzaOrder pizzaOrder){
+    public String processPizza(@Valid Pizza pizza, Errors errors, @ModelAttribute PizzaOrder pizzaOrder){
+        if(errors.hasErrors()){
+            return "design";
+        }
         pizzaOrder.addPizza(pizza);
         log.info("Processing pizza: {}", pizza);
         return "redirect:/orders/current";
