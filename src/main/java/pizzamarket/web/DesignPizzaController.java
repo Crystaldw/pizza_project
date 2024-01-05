@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("pizzaOrder")
-public class DesignPizzaController<pizzaOrder> {
+public class DesignPizzaController{
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
@@ -58,7 +58,8 @@ public class DesignPizzaController<pizzaOrder> {
     }
 
     @PostMapping
-    public String processPizza(@Valid Pizza pizza, Errors errors, @ModelAttribute PizzaOrder pizzaOrder){
+    public String processPizza(@Valid Pizza pizza, Errors errors,
+                               @ModelAttribute PizzaOrder pizzaOrder){
         if(errors.hasErrors()){
             return "design";
         }

@@ -14,11 +14,11 @@ import pizzamarket.Ingredient.Type;
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
     Map<String, Ingredient> ingredientMap = new HashMap<>();
 
-    public IngredientByIdConverter(){
+    public IngredientByIdConverter() {
         ingredientMap.put("FLPI",
                 new Ingredient("FLPI", "Flour Pizza", Ingredient.Type.BACON));
         ingredientMap.put("COPI",
-        new Ingredient("COPI", "Corn Pizza", Ingredient.Type.CHEESE));
+                new Ingredient("COPI", "Corn Pizza", Ingredient.Type.CHEESE));
         ingredientMap.put("BEPI",
                 new Ingredient("BFPI", "Beef Pizza", Ingredient.Type.BACON));
         ingredientMap.put("CEPI",

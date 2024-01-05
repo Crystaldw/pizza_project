@@ -1,6 +1,7 @@
 package pizzamarket.web;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import pizzamarket.PizzaOrder;
-
+@Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("pizzaOrder")
@@ -27,7 +28,7 @@ public class OrderController {
     public String processOrder(@Valid PizzaOrder order, Errors errors,
                                SessionStatus sessionStatus) {
         if (errors.hasErrors()){
-            return "design";
+            return "orderForm";
         }
         log.info("Order Submitted: {}", order);
         sessionStatus.setComplete();
