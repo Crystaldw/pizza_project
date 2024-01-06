@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-@WebMvcTest(HomeController.class) //тест для HomeController
+@WebMvcTest() //тест для HomeController
 public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc; //Внедрить MockMvc
