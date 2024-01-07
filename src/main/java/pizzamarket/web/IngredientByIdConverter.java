@@ -8,37 +8,19 @@ import java.util.Map;
 
 import pizzamarket.Ingredient;
 import pizzamarket.Ingredient.Type;
-
+import pizzamarket.data.IngredientRepository;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
-    Map<String, Ingredient> ingredientMap = new HashMap<>();
 
-    public IngredientByIdConverter() {
-        ingredientMap.put("FLPI",
-                new Ingredient("FLPI", "Flour Pizza", Ingredient.Type.BACON));
-        ingredientMap.put("COPI",
-                new Ingredient("COPI", "Corn Pizza", Ingredient.Type.CHEESE));
-        ingredientMap.put("BEPI",
-                new Ingredient("BFPI", "Beef Pizza", Ingredient.Type.BACON));
-        ingredientMap.put("CEPI",
-                new Ingredient("CEPI", "Cesar Pizza", Ingredient.Type.BASE));
-        ingredientMap.put("TMPI",
-                new Ingredient("TMPI", "Tomatoes Pizza", Ingredient.Type.SAUCE));
-        ingredientMap.put("CHPI",
-                new Ingredient("CHPI", "Cheddar Pizza", Ingredient.Type.CHEESE));
-        ingredientMap.put("JAPI",
-                new Ingredient("JAPI", "Jack Pizza", Ingredient.Type.WRAP));
-        ingredientMap.put("SLPI",
-                new Ingredient("SLPI", "Salsa Pizza", Ingredient.Type.SAUCE));
-        ingredientMap.put("CRPI",
-                new Ingredient("CRPI", "Cream Pizza", Ingredient.Type.WRAP));
-        ingredientMap.put("MAPI",
-                new Ingredient("MAPI", "Madagascar Pizza", Ingredient.Type.BACON));
+    private final IngredientRepository ingredientRepo;
+
+    public IngredientByIdConverter(IngredientRepository ingredientRepo) {
+        this.ingredientRepo = ingredientRepo;
     }
 
     @Override
     public Ingredient convert(String id) {
-        return ingredientMap.get(id);
+        return ingredientRepo.findById(id).orElse(null);
     }
 }

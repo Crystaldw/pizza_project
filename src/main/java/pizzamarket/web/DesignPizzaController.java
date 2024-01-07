@@ -10,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import pizzamarket.Pizza;
 import pizzamarket.PizzaOrder;
+import pizzamarket.data.IngredientRepository;
+import pizzamarket.data.JdbcIngredientRepository;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Controller
@@ -21,20 +24,28 @@ import java.util.stream.Collectors;
 @SessionAttributes("pizzaOrder")
 public class DesignPizzaController{
 
+
+    private final IngredientRepository ingredientRepo;
+
+    public DesignPizzaController(IngredientRepository ingredientRepo) {
+        this.ingredientRepo = ingredientRepo;
+    }
+
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLPI", "Flour Pizza", Type.BACON),
-                new Ingredient("COPI", "Corn Pizza", Type.CHEESE),
-                new Ingredient("BFPI", "Beef Pizza", Type.BACON),
-                new Ingredient("CEPI", "Cesar Pizza", Type.BASE),
-                new Ingredient("TMPI", "Tomatoes Pizza", Type.SAUCE),
-                new Ingredient("CHPI", "Cheddar Pizza", Type.CHEESE),
-                new Ingredient("JAPI", "Jack Pizza", Type.WRAP),
-                new Ingredient("SLPI", "Salsa Pizza", Type.SAUCE),
-                new Ingredient("CRPI", "Cream Pizza", Type.WRAP),
-                new Ingredient("MAPI", "Madagascar Pizza", Type.BACON)
-        );
+        Iterable<Ingredient> ingredients=ingredientRepo.findAll();
+//        List<Ingredient> ingredients = Arrays.asList(
+//                new Ingredient("FLPI", "Flour Pizza", Type.BACON),
+//                new Ingredient("COPI", "Corn Pizza", Type.CHEESE),
+//                new Ingredient("BFPI", "Beef Pizza", Type.BACON),
+//                new Ingredient("CEPI", "Cesar Pizza", Type.BASE),
+//                new Ingredient("TMPI", "Tomatoes Pizza", Type.SAUCE),
+//                new Ingredient("CHPI", "Cheddar Pizza", Type.CHEESE),
+//                new Ingredient("JAPI", "Jack Pizza", Type.WRAP),
+//                new Ingredient("SLPI", "Salsa Pizza", Type.SAUCE),
+//                new Ingredient("CRPI", "Cream Pizza", Type.WRAP),
+//                new Ingredient("MAPI", "Madagascar Pizza", Type.BACON)
+//        );
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
@@ -69,9 +80,8 @@ public class DesignPizzaController{
     }
 
     private Iterable<Ingredient> filterByType(
-            List<Ingredient> ingredients, Type type) {
-        return ingredients
-                .stream()
+           Iterable<Ingredient> ingredients, Type type) {
+        return StreamSupport.stream(ingredients.spliterator(), false)
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
     }
