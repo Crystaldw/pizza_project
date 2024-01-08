@@ -34,18 +34,7 @@ public class DesignPizzaController{
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         Iterable<Ingredient> ingredients=ingredientRepo.findAll();
-//        List<Ingredient> ingredients = Arrays.asList(
-//                new Ingredient("FLPI", "Flour Pizza", Type.BACON),
-//                new Ingredient("COPI", "Corn Pizza", Type.CHEESE),
-//                new Ingredient("BFPI", "Beef Pizza", Type.BACON),
-//                new Ingredient("CEPI", "Cesar Pizza", Type.BASE),
-//                new Ingredient("TMPI", "Tomatoes Pizza", Type.SAUCE),
-//                new Ingredient("CHPI", "Cheddar Pizza", Type.CHEESE),
-//                new Ingredient("JAPI", "Jack Pizza", Type.WRAP),
-//                new Ingredient("SLPI", "Salsa Pizza", Type.SAUCE),
-//                new Ingredient("CRPI", "Cream Pizza", Type.WRAP),
-//                new Ingredient("MAPI", "Madagascar Pizza", Type.BACON)
-//        );
+
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
