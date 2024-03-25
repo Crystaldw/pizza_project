@@ -11,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import pizzamarket.PizzaOrder;
+import pizzamarket.data.OrderRepository;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("pizzaOrder")
 public class OrderController {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(OrderController.class);
+    private OrderRepository orderRepo;
+
+    public OrderController(OrderRepository orderRepo) {
+        this.orderRepo = orderRepo;
+    }
 
     @GetMapping("/current")
     public String orderForm() {
@@ -30,7 +36,7 @@ public class OrderController {
         if (errors.hasErrors()){
             return "orderForm";
         }
-        log.info("Order Submitted: {}", order);
+        orderRepo.save(order);
         sessionStatus.setComplete();
 
         return "redirect:/";

@@ -11,10 +11,6 @@ import org.springframework.ui.Model;
 import pizzamarket.Pizza;
 import pizzamarket.PizzaOrder;
 import pizzamarket.data.IngredientRepository;
-import pizzamarket.data.JdbcIngredientRepository;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

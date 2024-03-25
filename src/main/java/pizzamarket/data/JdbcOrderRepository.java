@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pizzamarket.IngredientRef;
 import pizzamarket.Pizza;
 import pizzamarket.PizzaOrder;
+
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,7 +19,7 @@ import java.util.List;
 @Repository
 public class JdbcOrderRepository implements OrderRepository {
 
-    private JdbcOperations jdbcOperations;
+    private final JdbcOperations jdbcOperations;
 
     public JdbcOrderRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
@@ -29,9 +30,9 @@ public class JdbcOrderRepository implements OrderRepository {
     public PizzaOrder save(PizzaOrder order) {
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
                 "INSERT INTO Pizza_Order " +
-                        "(delivery_name, delivery_street, delivery_city, +" +
-                        "delivery_state, delivery_zip, cc_number, +" +
-                        "cc_expiration, cc_cvv, placed_at) +" +
+                        "(delivery_name, delivery_street, delivery_city," +
+                        "delivery_state, delivery_zip, cc_number," +
+                        "cc_expiration, cc_cvv, placed_at)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                 Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
@@ -67,8 +68,8 @@ public class JdbcOrderRepository implements OrderRepository {
         pizza.setCreatedAt(new Date());
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
                 "INSERT INTO Pizza "
-                + "(name, created_at, pizza_order, pizza_order_key) "
-                + "VALUES (?, ?, ?, ?)",
+                        + "(name, created_at, pizza_order, pizza_order_key) "
+                        + "VALUES (?, ?, ?, ?)",
                 Types.VARCHAR, Types.TIMESTAMP, Type.LONG, Type.LONG
         );
         pscf.setReturnGeneratedKeys(true);
@@ -90,10 +91,10 @@ public class JdbcOrderRepository implements OrderRepository {
 
     private void saveIngredientRefs(long pizzaId, List<IngredientRef> ingredientRefs) {
         int key = 0;
-        for(IngredientRef ingredientRef : ingredientRefs){
+        for (IngredientRef ingredientRef : ingredientRefs) {
             jdbcOperations.update(
                     "INSERT INTO Ingredient_Ref (ingredient, pizza, pizza_key) "
-                    + "VALUES (?, ?, ?)",
+                            + "VALUES (?, ?, ?)",
                     ingredientRef.getIngredient(), pizzaId, key++);
         }
     }
